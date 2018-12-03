@@ -8,10 +8,14 @@ import lombok.Value;
 public class User {
     private String id;
     private String name;
+    private String nickname;
     private Integer age;
 
     public static User.UserBuilder getBuilder(User user) {
-        return User.builder().id(
-                user.getId()).name(user.getName()).age(user.getAge());
+        return User.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .nickname(user.getNickname())
+                .age(user.getAge());
     }
 }
