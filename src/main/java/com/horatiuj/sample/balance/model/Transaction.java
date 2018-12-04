@@ -1,4 +1,4 @@
-package com.horatiuj.sample.model;
+package com.horatiuj.sample.balance.model;
 
 import org.immutables.value.Value;
 

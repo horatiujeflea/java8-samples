@@ -1,14 +1,12 @@
-package com.horatiuj.sample.function;
+package com.horatiuj.sample.balance.function;
 
-import com.horatiuj.sample.model.ImmutableTransaction;
+import com.horatiuj.sample.balance.model.ImmutableTransaction;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class GetUserCreditBalanceTest {
 

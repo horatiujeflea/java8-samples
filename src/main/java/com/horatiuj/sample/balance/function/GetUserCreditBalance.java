@@ -1,6 +1,6 @@
-package com.horatiuj.sample.function;
+package com.horatiuj.sample.balance.function;
 
-import com.horatiuj.sample.model.Transaction;
+import com.horatiuj.sample.balance.model.Transaction;
 import org.immutables.value.Value;
 
 import java.util.List;
