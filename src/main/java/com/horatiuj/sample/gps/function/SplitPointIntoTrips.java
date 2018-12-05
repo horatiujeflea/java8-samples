@@ -5,10 +5,7 @@ import com.horatiuj.sample.gps.model.ImmutableTrip;
 import com.horatiuj.sample.gps.model.Trip;
 import org.immutables.value.Value;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -29,6 +26,7 @@ public class SplitPointIntoTrips implements Function<SplitPointIntoTrips.Input, 
         Map<String, List<GpsPoint>> groupedPoints = gpsPoints
                 .stream()
                 .filter(filter.orElse((p) -> true))
+                .sorted(Comparator.comparing(GpsPoint::timestamp))
                 .collect(Collectors.groupingBy(GpsPoint::trip));
 
         return groupedPoints.entrySet()
