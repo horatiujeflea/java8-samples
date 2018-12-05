@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Value.Enclosing
 public class UpdateStats implements Function<UpdateStats.Input, Stats> {
 
     @Override
@@ -23,10 +24,10 @@ public class UpdateStats implements Function<UpdateStats.Input, Stats> {
         Objects.requireNonNull(gpsPoints);
         Objects.requireNonNull(stats);
 
-        List<GpsPoint> filteredPoints = gpsPoints.stream()
+        List<Trip> trips = new SplitPointIntoTrips().apply(ImmutableSplitPointIntoTrips.Input.builder()
+                .gpsPoints(gpsPoints)
                 .filter(new IsPointValid())
-                .collect(Collectors.toList());
-        List<Trip> trips = new SplitPointIntoTrips().apply(filteredPoints);
+                .build());
 
 
         return null;
