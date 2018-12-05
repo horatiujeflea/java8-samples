@@ -41,7 +41,7 @@ public class GetExpiredProducts implements Function<GetExpiredProducts.Input, Ge
         Function<Product, ExpiryType> dateToLabel = (p) ->
         {
             ExpiryType soonCheck = DateUtil.getDifferenceDays(current, p.expiryDate()) <= 3 ? SOON : NOT_APPLIES;
-            ExpiryType urgentCheck = DateUtil.getDifferenceDays(current, p.expiryDate()) <= 1 ? URGENT : soonCheck;
+            ExpiryType urgentCheck = DateUtil.getDifferenceDays(current, p.expiryDate()) == 0 ? URGENT : soonCheck;
             return current.after(p.expiryDate()) ? EXPIRED : urgentCheck;
         };
 
