@@ -35,6 +35,7 @@ public class SplitPointIntoTrips implements Function<SplitPointIntoTrips.Input, 
                         .id(e.getKey())
                         .addAllPoints(e.getValue())
                         .build())
+                .filter(t -> t.points() != null && !t.points().isEmpty())
                 .collect(Collectors.toList());
     }
 

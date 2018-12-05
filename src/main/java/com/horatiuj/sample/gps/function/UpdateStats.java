@@ -29,6 +29,10 @@ public class UpdateStats implements Function<UpdateStats.Input, Stats> {
                 .filter(new IsPointValid())
                 .build());
 
+        if (trips.isEmpty()) {
+            return stats.orElse(null);
+        }
+
         ImmutableStats.Builder currentStatsBuilder = ImmutableStats.builder();
         new AverageDistance().apply(trips).ifPresent(currentStatsBuilder::avgDistanceBetweenPoints);
         new AverageTime().apply(trips).ifPresent(currentStatsBuilder::avgTimeBetweenPoints);
