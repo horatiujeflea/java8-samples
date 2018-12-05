@@ -1,4 +1,4 @@
-package com.horatiuj.sample.expiry;
+package com.horatiuj.sample.expiry.function;
 
 import com.horatiuj.sample.expiry.model.ImmutableProduct;
 import org.junit.Assert;
@@ -9,8 +9,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class GetExpiredProductsTest {
 

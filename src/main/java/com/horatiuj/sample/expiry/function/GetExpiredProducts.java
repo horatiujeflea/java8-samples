@@ -1,4 +1,4 @@
-package com.horatiuj.sample.expiry;
+package com.horatiuj.sample.expiry.function;
 
 import com.horatiuj.sample.expiry.util.DateUtil;
 
@@ -8,7 +8,7 @@ import org.immutables.value.Value;
 import java.util.*;
 import java.util.function.Function;
 
-import static com.horatiuj.sample.expiry.GetExpiredProducts.ExpiryType.*;
+import static com.horatiuj.sample.expiry.function.GetExpiredProducts.ExpiryType.*;
 import static java.util.stream.Collectors.groupingBy;
 
 /**
