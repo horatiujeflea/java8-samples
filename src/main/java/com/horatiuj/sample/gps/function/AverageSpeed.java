@@ -11,6 +11,7 @@ public class AverageSpeed implements Function<List<Trip>, OptionalDouble> {
     public OptionalDouble apply(List<Trip> trips) {
         OptionalDouble avgDistanceResult = new AverageDistance().apply(trips);
         OptionalDouble avgTimeResult = new AverageTime().apply(trips);
+
         if (avgDistanceResult.isPresent() && avgTimeResult.isPresent()) {
             return OptionalDouble.of(avgDistanceResult.getAsDouble() / avgTimeResult.getAsDouble());
         } else {

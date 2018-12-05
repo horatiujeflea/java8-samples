@@ -5,6 +5,7 @@ import com.horatiuj.sample.gps.util.GeoUtil;
 import org.javatuples.Pair;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.function.Function;
@@ -12,11 +13,17 @@ import java.util.function.Function;
 public class AverageDistance implements Function<List<Trip>, OptionalDouble> {
     @Override
     public OptionalDouble apply(List<Trip> trips) {
+        Objects.requireNonNull(trips);
+
         return trips.stream()
                 .map(Trip::points)
                 .map(ps -> ps.stream()
                         .map(p -> Pair.with(0.0d, p))
-                        .reduce((pair1, pair2) -> Pair.with(pair1.getValue0() + GeoUtil.distance(pair1.getValue1(), pair2.getValue1()), pair2.getValue1()))
+                        .reduce((pair1, pair2) ->
+                                Pair.with(
+                                        pair1.getValue0() + GeoUtil.distance(pair1.getValue1(), pair2.getValue1()),
+                                        pair2.getValue1()
+                                ))
                         .map(Pair::getValue0)
                 )
                 .filter(Optional::isPresent)

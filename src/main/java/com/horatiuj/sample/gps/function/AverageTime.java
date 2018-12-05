@@ -4,6 +4,7 @@ import com.horatiuj.sample.gps.model.GpsPoint;
 import com.horatiuj.sample.gps.model.Trip;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.OptionalDouble;
 import java.util.function.Function;
 
@@ -11,6 +12,8 @@ public class AverageTime implements Function<List<Trip>, OptionalDouble> {
 
     @Override
     public OptionalDouble apply(List<Trip> trips) {
+        Objects.requireNonNull(trips);
+
         return trips.stream()
                 .map(Trip::points)
                 .map(ps -> ps.stream()
