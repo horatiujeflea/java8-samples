@@ -11,6 +11,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
+/**
+ * Having a list of gps data point, generate statistics @{@link Stats} from them.
+ * Compatible with stream processing by providing actual statistics as input.
+ */
 @Value.Enclosing
 public class UpdateStats implements Function<UpdateStats.Input, Stats> {
 
