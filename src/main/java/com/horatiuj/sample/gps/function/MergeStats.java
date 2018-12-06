@@ -17,10 +17,10 @@ public class MergeStats implements BiFunction<Stats, Stats, Stats> {
         }
 
         return ImmutableStats.builder()
-                .avgSpeed(avg(stats1.avgSpeed(), stats2.avgSpeed(), stats1.pointsProcessed(), stats2.pointsProcessed()))
-                .avgTimeBetweenPoints(avg(stats1.avgTimeBetweenPoints(), stats2.avgTimeBetweenPoints(), stats1.pointsProcessed(), stats2.pointsProcessed()))
-                .avgDistanceBetweenPoints(avg(stats1.avgDistanceBetweenPoints(), stats2.avgDistanceBetweenPoints(), stats1.pointsProcessed(), stats2.pointsProcessed()))
-                .avgPointsPerTrip(avg(stats1.avgPointsPerTrip(), stats2.avgPointsPerTrip(), stats1.pointsProcessed(), stats2.pointsProcessed()))
+                .avgSpeed(avg(stats1.avgSpeed(), stats2.avgSpeed(), stats1.tripsProcessed(), stats2.tripsProcessed()))
+                .avgTimeBetweenPoints(avg(stats1.avgTimeBetweenPoints(), stats2.avgTimeBetweenPoints(), stats1.tripsProcessed(), stats2.tripsProcessed()))
+                .avgDistanceBetweenPoints(avg(stats1.avgDistanceBetweenPoints(), stats2.avgDistanceBetweenPoints(), stats1.tripsProcessed(), stats2.tripsProcessed()))
+                .avgPointsPerTrip(avg(stats1.avgPointsPerTrip(), stats2.avgPointsPerTrip(), stats1.tripsProcessed(), stats2.tripsProcessed()))
                 .maxTripPoints(Math.max(stats1.maxTripPoints(), stats2.maxTripPoints()))
                 .minTripPoints(Math.min(stats1.minTripPoints(), stats2.minTripPoints()))
                 .pointsProcessed(stats1.pointsProcessed() + stats2.pointsProcessed())
@@ -29,7 +29,7 @@ public class MergeStats implements BiFunction<Stats, Stats, Stats> {
     }
 
     private Double avg(Double value1, Double value2, Long count1, Long count2) {
-        Long totalCount = count1 + count2;
-        return count1 / totalCount * value1 + count2 / totalCount * value2;
+        Double totalCount = (double) count1 + count2;
+        return Math.round((count1 / totalCount * value1 + count2 / totalCount * value2) * 100.0) / 100.0;
     }
 }
