@@ -112,7 +112,7 @@ class AverageSpeedTest {
                 .build());
 
         OptionalDouble result = f.apply(trips);
-        Assert.assertEquals(12.81d, result.getAsDouble(), 0.01);
+        Assert.assertEquals(69.11d, result.getAsDouble(), 0.01);
     }
 
 }
