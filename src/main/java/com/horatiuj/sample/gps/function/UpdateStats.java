@@ -16,17 +16,17 @@ import java.util.function.Function;
  * Compatible with stream processing by providing actual statistics as input.
  */
 @Value.Enclosing
-public class UpdateStats implements Function<UpdateStats.Input, Stats> {
+public class UpdateStats implements Function<UpdateStats.Input, Optional<Stats>> {
 
     @Override
-    public Stats apply(Input input) {
+    public Optional<Stats> apply(Input input) {
         Objects.requireNonNull(input);
 
         List<GpsPoint> gpsPoints = input.gpsPoints();
-        Optional<Stats> stats = input.stats();
+        Optional<Stats> prevStats = input.stats();
 
         Objects.requireNonNull(gpsPoints);
-        Objects.requireNonNull(stats);
+        Objects.requireNonNull(prevStats);
 
         List<Trip> trips = new SplitPointIntoTrips().apply(ImmutableSplitPointIntoTrips.Input.builder()
                 .gpsPoints(gpsPoints)
@@ -34,7 +34,7 @@ public class UpdateStats implements Function<UpdateStats.Input, Stats> {
                 .build());
 
         if (trips.isEmpty()) {
-            return stats.orElse(null);
+            return prevStats;
         }
 
         ImmutableStats.Builder currentStatsBuilder = ImmutableStats.builder();
@@ -48,8 +48,7 @@ public class UpdateStats implements Function<UpdateStats.Input, Stats> {
                 .pointsProcessed((long) trips.stream().mapToInt(t -> t.points().size()).sum())
                 .build();
 
-        return stats.map(s -> new MergeStats().apply(s, currentStats)).orElse(currentStats);
-
+        return Optional.of(prevStats.map(ps -> new MergeStats().apply(ps, currentStats)).orElse(currentStats));
     }
 
     @Value.Immutable
