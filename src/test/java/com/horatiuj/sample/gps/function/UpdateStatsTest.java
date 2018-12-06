@@ -79,6 +79,73 @@ class UpdateStatsTest {
     }
 
     @Test
+    void previousStatsTest() throws ParseException {
+        String tripId1 = UUID.randomUUID().toString();
+        String tripId2 = UUID.randomUUID().toString();
+
+        ImmutableStats existingStats = ImmutableStats.builder()
+                .avgSpeed(40.0)
+                .avgTimeBetweenPoints(8.0)
+                .avgDistanceBetweenPoints(150.0)
+                .avgPointsPerTrip(530.0)
+                .maxTripPoints(1350)
+                .minTripPoints(140)
+                .pointsProcessed(20000L)
+                .tripsProcessed(40L)
+                .build();
+
+        Stats stats = f.apply(ImmutableUpdateStats.Input.builder()
+                .stats(Optional.of(existingStats))
+                .addGpsPoints(ImmutableGpsPoint.builder()
+                        .trip(tripId1)
+                        .timestamp(stringToDate("2018-12-03T08:08:10.000-00:00"))
+                        .lat(46.775004)
+                        .lon(23.587317)
+                        .build())
+                .addGpsPoints(ImmutableGpsPoint.builder()
+                        .trip(tripId1)
+                        .timestamp(stringToDate("2018-12-03T08:08:17.000-00:00"))
+                        .lat(46.775502)
+                        .lon(23.587261)
+                        .build())
+                .addGpsPoints(ImmutableGpsPoint.builder()
+                        .trip(tripId1)
+                        .timestamp(stringToDate("2018-12-03T08:08:20.000-00:00"))
+                        .lat(46.776195)
+                        .lon(23.587201)
+                        .build())
+                .addGpsPoints(ImmutableGpsPoint.builder()
+                        .trip(tripId1)
+                        .timestamp(stringToDate("2018-12-03T08:08:22.000-00:00"))
+                        .lat(46.776384)
+                        .lon(23.587180)
+                        .build())
+                .addGpsPoints(ImmutableGpsPoint.builder()
+                        .trip(tripId2)
+                        .timestamp(stringToDate("2018-12-03T08:08:10.000-00:00"))
+                        .lat(46.776855)
+                        .lon(23.607117)
+                        .build())
+                .addGpsPoints(ImmutableGpsPoint.builder()
+                        .trip(tripId2)
+                        .timestamp(stringToDate("2018-12-03T08:08:20.000-00:00"))
+                        .lat(46.780095)
+                        .lon(23.624429)
+                        .build())
+                .build()).get();
+
+        System.out.println(stats);
+        Assert.assertEquals(41.39d, stats.avgSpeed(), 0.01);
+        Assert.assertEquals(8.14d, stats.avgTimeBetweenPoints(), 0.01);
+        Assert.assertEquals(179.06, stats.avgDistanceBetweenPoints(), 0.01);
+        Assert.assertEquals(504.9, stats.avgPointsPerTrip(), 0.01);
+        Assert.assertEquals(1350, stats.maxTripPoints(), 0.01);
+        Assert.assertEquals(2, stats.minTripPoints(), 0.01);
+        Assert.assertEquals(20006, stats.pointsProcessed(), 0.01);
+        Assert.assertEquals(42, stats.tripsProcessed(), 0.01);
+    }
+
+    @Test
     void emptyTest() {
         f.apply(ImmutableUpdateStats.Input.builder()
                 .stats(Optional.empty())
