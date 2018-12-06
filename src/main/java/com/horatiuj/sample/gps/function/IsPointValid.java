@@ -22,8 +22,8 @@ public class IsPointValid implements Predicate<GpsPoint> {
     public boolean test(GpsPoint gpsPoint) {
         Objects.requireNonNull(gpsPoint);
 
-        return gpsPoint.trip() != null &&
-                gpsPoint.accuracy() < 10 &&
+        boolean isAccuracyValid = gpsPoint.accuracy() == null || (gpsPoint.accuracy() != null && gpsPoint.accuracy() < 10);
+        return isAccuracyValid &&
                 df.format(gpsPoint.lat()).matches(LATITUDE_PATTERN) &&
                 df.format(gpsPoint.lon()).matches(LONGITUDE_PATTERN);
     }
